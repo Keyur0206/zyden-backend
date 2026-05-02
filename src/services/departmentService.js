@@ -1,4 +1,5 @@
 import Department from "../models/Department.js";
+import Employee from "../models/Employee.js";
 
 // Create
 export const createDepartment = async ({ name }) => {
@@ -30,6 +31,12 @@ export const updateDepartment = async (id, { name }) => {
 };
 
 export const deleteDepartment = async (id) => {
+  const employeeExists = await Employee.exists({ department: id });
+
+  if (employeeExists) {
+    throw new Error("Department is assigned to employees. Reassign them before deleting.");
+  }
+
   const department = await Department.findByIdAndDelete(id);
 
   if (!department) {
