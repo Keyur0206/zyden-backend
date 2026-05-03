@@ -5,7 +5,6 @@ export const protect = async (req, res, next) => {
   try {
     let token;
 
-    // Get token from header
     if (req.headers.authorization && req.headers.authorization.startsWith("Bearer")) {
       token = req.headers.authorization.split(" ")[1];
     }
@@ -18,10 +17,8 @@ export const protect = async (req, res, next) => {
       });
     }
 
-    // Verify token
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-    // Get user
     const user = await Admin.findById(decoded.id);
 
     if (!user) {
@@ -32,7 +29,6 @@ export const protect = async (req, res, next) => {
       });
     }
 
-    // Attach user to request
     req.user = user;
 
     next();

@@ -1,6 +1,5 @@
 import * as employeeService from "../services/employeeService.js";
 
-// Create
 export const createEmployee = async (req, res) => {
   try {
     const emp = await employeeService.createEmployee(req.body);
@@ -19,7 +18,6 @@ export const createEmployee = async (req, res) => {
   }
 };
 
-// Get All
 export const getEmployees = async (req, res) => {
   try {
     const data = await employeeService.getEmployees(req.query);
@@ -38,7 +36,6 @@ export const getEmployees = async (req, res) => {
   }
 };
 
-// update
 export const updateEmployee = async (req, res) => {
   try {
     const emp = await employeeService.updateEmployee(req.params.id, req.body);
@@ -57,7 +54,6 @@ export const updateEmployee = async (req, res) => {
   }
 };
 
-// Delete
 export const deleteEmployee = async (req, res) => {
   try {
     await employeeService.deleteEmployee(req.params.id);
@@ -75,8 +71,6 @@ export const deleteEmployee = async (req, res) => {
     });
   }
 };
-
-// get inactive employee
 
 export const getDeletedEmployees = async (req, res) => {
   try {
@@ -96,7 +90,6 @@ export const getDeletedEmployees = async (req, res) => {
   }
 };
 
-//  Restore Employee
 export const restoreEmployee = async (req, res) => {
   try {
     const emp = await employeeService.restoreEmployee(req.params.id);
@@ -115,7 +108,6 @@ export const restoreEmployee = async (req, res) => {
   }
 };
 
-//  Permanent Delete
 export const permanentDeleteEmployee = async (req, res) => {
   try {
     await employeeService.permanentDeleteEmployee(req.params.id);

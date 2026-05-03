@@ -14,26 +14,13 @@ export const createEmployee = async (data) => {
 };
 
 export const getEmployees = async (query) => {
-  const {
-    search,
-    department,
-    minSalary,
-    maxSalary,
-    startDate,
-    endDate,
-    status,
-    sort,
-    page = 1,
-    limit = 10,
-  } = query;
+  const { search, department, minSalary, maxSalary, status, sort, page = 1, limit = 10 } = query;
 
   let filter = {};
 
-  // Soft delete filter
   if (status === "inactive") filter.isDeleted = true;
   else filter.isDeleted = false;
 
-  // Search
   if (search) {
     filter.$or = [
       { name: { $regex: search, $options: "i" } },
@@ -41,30 +28,19 @@ export const getEmployees = async (query) => {
     ];
   }
 
-  // Department
   if (department) filter.department = department;
 
-  // Salary range
   if (minSalary || maxSalary) {
     filter.salary = {};
     if (minSalary) filter.salary.$gte = Number(minSalary);
     if (maxSalary) filter.salary.$lte = Number(maxSalary);
   }
 
-  // date range
-  if (startDate || endDate) {
-    filter.joiningDate = {};
-    if (startDate) filter.joiningDate.$gte = new Date(startDate);
-    if (endDate) filter.joiningDate.$lte = new Date(endDate);
-  }
-
-  // Sorting
   let sortOption = {};
   if (sort === "salary_desc") sortOption.salary = -1;
   if (sort === "salary_asc") sortOption.salary = 1;
   if (sort === "date_desc") sortOption.joiningDate = -1;
 
-  // pagination
   const skip = (page - 1) * limit;
 
   const employees = await Employee.find(filter)
@@ -83,7 +59,6 @@ export const getEmployees = async (query) => {
   };
 };
 
-// update
 export const updateEmployee = async (id, data) => {
   const emp = await Employee.findByIdAndUpdate(id, data, { new: true });
 
@@ -92,7 +67,6 @@ export const updateEmployee = async (id, data) => {
   return emp;
 };
 
-// delete
 export const deleteEmployee = async (id) => {
   const emp = await Employee.findByIdAndUpdate(id, { isDeleted: true }, { new: true });
 
@@ -101,13 +75,10 @@ export const deleteEmployee = async (id) => {
   return emp;
 };
 
-// get inactive employee
-
 export const getDeletedEmployees = async () => {
   return await Employee.find({ isDeleted: true }).populate("department", "name");
 };
 
-//  Restore Employee
 export const restoreEmployee = async (id) => {
   const emp = await Employee.findByIdAndUpdate(id, { isDeleted: false }, { new: true });
 
@@ -116,7 +87,6 @@ export const restoreEmployee = async (id) => {
   return emp;
 };
 
-//  Permanent Delete
 export const permanentDeleteEmployee = async (id) => {
   const emp = await Employee.findByIdAndDelete(id);
 

@@ -1,6 +1,5 @@
 import * as departmentService from "../services/departmentService.js";
 
-// Create
 export const createDepartment = async (req, res) => {
   try {
     const department = await departmentService.createDepartment(req.body);
@@ -19,7 +18,6 @@ export const createDepartment = async (req, res) => {
   }
 };
 
-// Get All
 export const getDepartments = async (req, res) => {
   try {
     const departments = await departmentService.getDepartments();
@@ -38,7 +36,6 @@ export const getDepartments = async (req, res) => {
   }
 };
 
-// Update
 export const updateDepartment = async (req, res) => {
   try {
     const department = await departmentService.updateDepartment(req.params.id, req.body);
@@ -57,7 +54,6 @@ export const updateDepartment = async (req, res) => {
   }
 };
 
-// Delete (Hard)
 export const deleteDepartment = async (req, res) => {
   try {
     await departmentService.deleteDepartment(req.params.id);

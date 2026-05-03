@@ -29,15 +29,6 @@ const adminSchema = new mongoose.Schema(
       enum: ["admin"],
       default: "admin",
     },
-
-    // isActive: {
-    //   type: Boolean,
-    //   default: true,
-    // },
-
-    // lastLogin: {
-    //   type: Date,
-    // },
   },
   {
     timestamps: true,

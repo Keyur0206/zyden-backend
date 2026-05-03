@@ -1,7 +1,6 @@
 import Department from "../models/Department.js";
 import Employee from "../models/Employee.js";
 
-// Create
 export const createDepartment = async ({ name }) => {
   const existing = await Department.findOne({
     name: new RegExp(`^${name}$`, "i"),
@@ -14,12 +13,10 @@ export const createDepartment = async ({ name }) => {
   return await Department.create({ name });
 };
 
-// Get All
 export const getDepartments = async () => {
   return await Department.find();
 };
 
-// Update
 export const updateDepartment = async (id, { name }) => {
   const department = await Department.findByIdAndUpdate(id, { name }, { new: true });
 
